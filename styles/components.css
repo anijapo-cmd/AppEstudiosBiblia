@@ -1,0 +1,408 @@
+/* Chapter Viewer */
+.chapter-viewer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.chapter-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.chapter-title {
+    font-size: var(--font-size-3xl);
+    color: var(--accent-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.chapter-content {
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+    color: var(--text-primary);
+}
+
+.verse {
+    margin-bottom: var(--spacing-md);
+}
+
+.verse-number {
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-right: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    vertical-align: super;
+}
+
+/* Navigation Arrows */
+.chapter-nav-arrows {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    z-index: 50;
+    transition: top var(--transition-fast);
+}
+
+.chapter-nav-arrows.left {
+    left: var(--spacing-lg);
+}
+
+.chapter-nav-arrows.right {
+    right: var(--spacing-lg);
+}
+
+.nav-arrow {
+    width: 50px;
+    height: 50px;
+    background-color: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-fast);
+}
+
+.nav-arrow:hover {
+    background-color: var(--accent-hover);
+    transform: scale(1.1);
+}
+
+.nav-arrow:active {
+    transform: scale(0.95);
+}
+
+.nav-arrow:disabled {
+    background-color: var(--text-muted);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Book Study Page */
+.book-study-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.book-study-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-lg);
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.book-study-title {
+    font-size: var(--font-size-2xl);
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.header-actions {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.btn-primary {
+    background-color: var(--accent-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
+.btn-success {
+    background-color: #48bb78;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #38a169;
+}
+
+.btn-danger {
+    background-color: #f56565;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #e53e3e;
+}
+
+/* Internal Navigation Menu */
+.internal-nav {
+    background-color: var(--bg-secondary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-xl);
+    position: sticky;
+    top: 80px;
+    z-index: 40;
+}
+
+.internal-nav-list {
+    display: flex;
+    gap: var(--spacing-md);
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.internal-nav-item {
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.internal-nav-item:hover {
+    background-color: var(--accent-primary);
+    color: white;
+}
+
+/* Hamburger Menu for Mobile */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+}
+
+.hamburger-line {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-primary);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+@media (max-width: 740px) {
+    .internal-nav-list {
+        display: none;
+        flex-direction: column;
+    }
+
+    .internal-nav-list.active {
+        display: flex;
+    }
+
+    .hamburger-menu {
+        display: flex;
+    }
+}
+
+/* Study Sections */
+.study-section {
+    background-color: var(--bg-secondary);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-xl);
+    scroll-margin-top: 150px;
+}
+
+.section-title {
+    font-size: var(--font-size-xl);
+    color: var(--accent-primary);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+}
+
+.section-content {
+    color: var(--text-primary);
+    line-height: 1.8;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-content-indented {
+    margin-left: 2rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family);
+    transition: all var(--transition-fast);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.1);
+}
+
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Dynamic List Items */
+.dynamic-list-container {
+    margin-top: var(--spacing-md);
+}
+
+.input-with-button {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.input-with-button input {
+    flex: 1;
+}
+
+.dynamic-list {
+    margin-top: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.dynamic-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-sm) 0;
+    margin-bottom: var(--spacing-sm);
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: var(--btn-danger);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: var(--spacing-xs);
+    transition: transform var(--transition-fast);
+}
+
+.remove-btn:hover {
+    transform: scale(1.2);
+    color: #e53e3e;
+}
+
+/* Historical Data Grid */
+.historical-data-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.historical-data-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.historical-data-item label {
+    min-width: 180px;
+    font-weight: 500;
+}
+
+.historical-data-item input {
+    flex: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .chapter-nav-arrows.left {
+        left: var(--spacing-sm);
+    }
+
+    .chapter-nav-arrows.right {
+        right: var(--spacing-sm);
+    }
+
+    .nav-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .book-study-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .historical-data-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .historical-data-item label {
+        min-width: auto;
+    }
+}

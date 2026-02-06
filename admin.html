@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración - Biblia</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/themes.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/admin.css">
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="light-theme">
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-container" onclick="window.location.href='index.html'">
+                <img src="assets/logo.png" alt="Biblia">
+            </div>
+            <nav class="main-nav">
+                <div class="nav-item" onclick="window.location.href='index.html'">Volver al Home</div>
+            </nav>
+            <div class="auth-section">
+                <div class="user-profile" id="headerUserProfile">
+                    <span class="username" id="headerUsername">Admin</span>
+                    <button class="btn-logout" id="headerLogoutBtn">Salir</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="admin-wrapper fade-in">
+            <div class="admin-sidebar">
+                <h2>Panel de Control</h2>
+                <div class="admin-menu">
+                    <button class="admin-menu-item active" data-tab="users">👥 Usuarios</button>
+                    <button class="admin-menu-item" data-tab="bible">📖 Editar Biblia</button>
+                </div>
+            </div>
+
+            <div class="admin-content">
+                <!-- Users Tab -->
+                <section id="usersTab" class="admin-section">
+                    <div class="section-header">
+                        <h3>Gestión de Usuarios</h3>
+                        <button class="btn-primary" id="btnNewUser">+ Agregar Usuario</button>
+                    </div>
+                    <div class="table-container">
+                        <table id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Admin</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersList">
+                                <!-- Users will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Bible Tab -->
+                <section id="bibleTab" class="admin-section hidden">
+                    <div class="section-header">
+                        <h3>Editar Biblia (RV1960)</h3>
+                    </div>
+                    <div class="bible-editor-controls">
+                        <select id="bookSelect">
+                            <option value="">Seleccionar Libro</option>
+                        </select>
+                        <select id="chapterSelect" disabled>
+                            <option value="">Capítulo</option>
+                        </select>
+                        <button class="btn-primary" id="btnAddVerse" disabled>+ Nuevo Versículo</button>
+                    </div>
+                    <div class="verse-list" id="verseList">
+                        <p class="empty-message">Selecciona un libro y capítulo para editar</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="userModal" class="modal hidden">
+        <div class="modal-content">
+            <h4 id="modalTitle">Nuevo Usuario</h4>
+            <form id="userForm">
+                <input type="hidden" id="userId">
+                <div class="form-group">
+                    <label>Nombre de Usuario</label>
+                    <input type="text" id="userName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="userEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="userPassword" placeholder="Nueva contraseña">
+                    <small id="pwHint">Dejar en blanco para no cambiar</small>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="btnCancelUser">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p style="color: var(--text-muted); font-size: 0.875rem;">
+                © 2026 Aplicación de Estudios Bíblicos - Administración
+            </p>
+            <button class="theme-toggle" title="Cambiar tema">🌓 Cambiar Tema</button>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script type="module" src="js/admin.js"></script>
+</body>
+
+</html>

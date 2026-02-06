@@ -1,0 +1,56 @@
+/* Dark Theme */
+body.dark-theme {
+    --bg-primary: #0f1419;
+    --bg-secondary: #1a2332;
+    --bg-tertiary: #253447;
+    --text-primary: #e2e8f0;
+    --text-secondary: #cbd5e0;
+    --text-muted: #a0aec0;
+    --accent-primary: #4299e1;
+    --accent-secondary: #63b3ed;
+    --accent-hover: #3182ce;
+    --border-color: #2d3748;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Light Theme (default - already defined in main.css) */
+body.light-theme {
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #e9ecef;
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --text-muted: #6c757d;
+    --accent-primary: #2c5282;
+    --accent-secondary: #3182ce;
+    --accent-hover: #2b6cb0;
+    --border-color: #dee2e6;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Theme Toggle Icon */
+.theme-toggle::before {
+    content: '☀️';
+    font-size: 1.2rem;
+}
+
+body.dark-theme .theme-toggle::before {
+    content: '🌙';
+}
+
+/* Smooth transitions for theme changes */
+body,
+.header,
+.dropdown-menu,
+.submenu,
+.footer,
+.theme-toggle {
+    transition: background-color var(--transition-base),
+        color var(--transition-base),
+        border-color var(--transition-base),
+        box-shadow var(--transition-base);
+}

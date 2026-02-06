@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceder - Biblia</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/themes.css">
+    <link rel="stylesheet" href="styles/components.css">
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="light-theme">
+    <!-- Header Minimalista -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-container" onclick="window.location.href='index.html'">
+                <img src="assets/logo.png" alt="Biblia">
+            </div>
+            <div class="auth-section">
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="auth-container fade-in">
+            <div class="auth-header">
+                <h1>Bienvenido</h1>
+                <p id="authSubtitle">Accede a tu cuenta de estudios</p>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="loginTab">Ingresar</div>
+                <div class="auth-tab" id="registerTab">Registrarme</div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="loginUsername">Nombre de Usuario o Email</label>
+                    <input type="text" id="loginUsername" placeholder="Ej: esteban o correo@ejemplo.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-auth-submit">Ingresar</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form hidden">
+                <div class="form-group">
+                    <label for="regUsername">Nombre de Usuario</label>
+                    <input type="text" id="regUsername" placeholder="Ej: usuario123" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Correo Electrónico</label>
+                    <input type="email" id="regEmail" placeholder="correo@ejemplo.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Contraseña</label>
+                    <input type="password" id="regPassword" placeholder="Mínimo 6 caracteres" required>
+                </div>
+                <div class="form-group">
+                    <label for="regConfirmPassword">Confirmar Contraseña</label>
+                    <input type="password" id="regConfirmPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-auth-submit">Registrarme</button>
+            </form>
+
+            <div id="authMessage" class="auth-message hidden"></div>
+        </div>
+        <footer class="footer">
+            <div class="footer-container">
+                <p style="color: var(--text-muted); font-size: 0.875rem;">
+                    © 2026 Aplicación de Estudios Bíblicos
+                </p>
+                <button class="theme-toggle" title="Cambiar tema">🌓 Cambiar Tema</button>
+            </div>
+        </footer>
+
+        <!-- JavaScript -->
+        <script type="module" src="js/auth.js"></script>
+</body>
+
+</html>
