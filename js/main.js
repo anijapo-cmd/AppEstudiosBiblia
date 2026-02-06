@@ -95,6 +95,12 @@ class BibleApp {
     const nav = document.querySelector('.main-nav');
     if (!nav) return;
 
+    if (isAdmin) {
+      document.body.classList.add('admin-mode');
+    } else {
+      document.body.classList.remove('admin-mode');
+    }
+
     let adminLink = document.getElementById('navAdminLink');
 
     if (isAdmin) {
@@ -140,6 +146,57 @@ class BibleApp {
     if (logoContainer) {
       logoContainer.addEventListener('click', () => {
         this.showHome();
+      });
+    }
+
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.querySelector('.main-nav');
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        mainNav.classList.toggle('active');
+      });
+
+      // Close menu when clicking a nav item (on mobile)
+      mainNav.addEventListener('click', (e) => {
+        const isMobile = (document.body.classList.contains('admin-mode') && window.innerWidth <= 760) ||
+          (!document.body.classList.contains('admin-mode') && window.innerWidth <= 570);
+
+        if (isMobile) {
+          const navItem = e.target.closest('.nav-item');
+          if (navItem) {
+            const dropdown = navItem.querySelector('.dropdown-menu');
+
+            // If we clicked inside the dropdown itself, don't close/toggle everything
+            if (e.target.closest('.dropdown-menu')) return;
+
+            if (dropdown) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const wasActive = navItem.classList.contains('active-nav');
+
+              // Close all other nav-items/dropdowns
+              mainNav.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active-nav');
+                const d = item.querySelector('.dropdown-menu');
+                if (d) d.classList.remove('active');
+              });
+
+              // Toggle this one
+              if (!wasActive) {
+                navItem.classList.add('active-nav');
+                dropdown.classList.add('active');
+              }
+              return;
+            }
+
+            // If it's a nav-item without dropdown
+            menuToggle.classList.remove('active');
+            mainNav.classList.remove('active');
+          }
+        }
       });
     }
   }

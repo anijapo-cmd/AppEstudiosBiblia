@@ -32,6 +32,7 @@ class AdminPanel {
         }
 
         this.currentUser = profile;
+        document.body.classList.add('admin-mode');
         const headerUsername = document.getElementById('headerUsername');
         if (headerUsername) headerUsername.textContent = profile.username;
 
@@ -67,6 +68,49 @@ class AdminPanel {
             await supabase.auth.signOut();
             window.location.href = 'index.html';
         });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.querySelector('.main-nav');
+        if (menuToggle && mainNav) {
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                mainNav.classList.toggle('active');
+            });
+
+            mainNav.addEventListener('click', (e) => {
+                // Admin panel usually has a fixed breakpoint for mobile behavior
+                if (window.innerWidth <= 760) {
+                    const navItem = e.target.closest('.nav-item');
+                    if (navItem) {
+                        const dropdown = navItem.querySelector('.dropdown-menu');
+                        if (e.target.closest('.dropdown-menu')) return;
+
+                        if (dropdown) {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            const wasActive = navItem.classList.contains('active-nav');
+
+                            // Close all other nav-items/dropdowns
+                            mainNav.querySelectorAll('.nav-item').forEach(item => {
+                                item.classList.remove('active-nav');
+                                const d = item.querySelector('.dropdown-menu');
+                                if (d) d.classList.remove('active');
+                            });
+
+                            if (!wasActive) {
+                                navItem.classList.add('active-nav');
+                                dropdown.classList.add('active');
+                            }
+                            return;
+                        }
+                        menuToggle.classList.remove('active');
+                        mainNav.classList.remove('active');
+                    }
+                }
+            });
+        }
     }
 
     // --- User Management ---
@@ -84,10 +128,10 @@ class AdminPanel {
         const tbody = document.getElementById('usersList');
         tbody.innerHTML = users.map(user => `
             <tr>
-                <td>${user.username}</td>
-                <td>${user.email}</td>
-                <td>${user.is_admin ? '<span class="badge badge-admin">Admin</span>' : ''}</td>
-                <td>
+                <td data-label="Nombre">${user.username}</td>
+                <td data-label="Email">${user.email}</td>
+                <td data-label="Admin">${user.is_admin ? '<span class="badge badge-admin">Admin</span>' : ''}</td>
+                <td data-label="Acciones">
                     <button class="action-btn btn-edit" title="Editar" onclick="window.adminPanel.editUser('${user.id}')">✏️</button>
                     ${user.username !== 'Esteban' ? `<button class="action-btn btn-delete" title="Eliminar" onclick="window.adminPanel.deleteUser('${user.id}')">🗑️</button>` : ''}
                 </td>

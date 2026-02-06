@@ -236,3 +236,128 @@ tr:hover {
     color: var(--text-muted);
     padding: 3rem;
 }
+
+/* RESPONSIVE ADMIN */
+@media (max-width: 950px) {
+    .admin-wrapper {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .admin-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: var(--spacing-lg);
+    }
+
+    .admin-sidebar h2 {
+        text-align: center;
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .admin-menu {
+        flex-direction: row;
+        justify-content: center;
+        background-color: var(--bg-primary);
+        padding: var(--spacing-xs);
+        border-radius: var(--radius-lg);
+    }
+
+    .admin-menu-item {
+        flex: 1;
+        text-align: center;
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .admin-content {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+        text-align: center;
+        width: 100%;
+    }
+
+    .section-header h3 {
+        width: 100%;
+    }
+
+    .section-header .btn-primary {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .bible-editor-controls {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .bible-editor-controls select,
+    .bible-editor-controls button {
+        width: 100%;
+    }
+
+    .verse-item {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+        text-align: left;
+    }
+
+    .verse-number {
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: var(--spacing-xs);
+    }
+
+    .action-btn {
+        justify-self: flex-end;
+    }
+
+    /* Table adjustments for very small screens */
+    table thead {
+        display: none;
+    }
+
+    table,
+    table tbody,
+    table tr,
+    table td {
+        display: block;
+        width: 100%;
+    }
+
+    table tr {
+        margin-bottom: var(--spacing-lg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        background: var(--bg-primary);
+        padding: var(--spacing-sm);
+    }
+
+    table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: 1px solid var(--bg-tertiary);
+    }
+
+    table td:last-child {
+        border-bottom: none;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: var(--spacing-md);
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+}
