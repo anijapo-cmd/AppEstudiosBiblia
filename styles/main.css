@@ -222,6 +222,30 @@ body {
   background: transparent;
 }
 
+/* Bible Search in Dropdown */
+.bible-search-container {
+  padding: var(--spacing-md);
+  border-bottom: 2px solid var(--accent-primary);
+  background-color: var(--bg-tertiary);
+}
+
+.bible-search-input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.bible-search-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(44, 82, 130, 0.2);
+}
+
 .nav-item:hover .dropdown-menu,
 .dropdown-menu:hover,
 .dropdown-menu.active {
@@ -313,6 +337,17 @@ body {
   margin: var(--spacing-2xl) auto;
   padding: 0 var(--spacing-xl);
   min-height: calc(100vh - 200px);
+}
+
+.verse.highlighted {
+  background-color: rgba(255, 235, 59, 0.3);
+  border-left: 4px solid var(--accent-primary);
+  padding-left: 1rem;
+  transition: all 0.5s ease;
+}
+
+.dark-theme .verse.highlighted {
+  background-color: rgba(255, 235, 59, 0.15);
 }
 
 /* Footer */

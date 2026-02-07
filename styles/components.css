@@ -48,7 +48,6 @@
     flex-direction: column;
     gap: var(--spacing-md);
     z-index: 50;
-    transition: top var(--transition-fast);
 }
 
 .chapter-nav-arrows.left {

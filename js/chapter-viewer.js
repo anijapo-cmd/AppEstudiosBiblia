@@ -9,10 +9,11 @@ export class ChapterViewer {
     this.bookData = null;
   }
 
-  async render(bookIndex, chapterNumber) {
+  async render(bookIndex, chapterNumber, options = {}) {
     this.currentBook = bookIndex;
     this.currentChapter = chapterNumber;
     this.bookData = BIBLE_BOOKS[bookIndex];
+    this.navOptions = options;
 
     const verses = await BibleAPI.getChapter(bookIndex + 1, chapterNumber);
 
@@ -27,23 +28,38 @@ export class ChapterViewer {
           <h1 class="chapter-title">${this.bookData.name} ${chapterNumber}</h1>
         </div>
         <div class="chapter-content">
-          ${this.formatVerses(verses)}
+          ${this.formatVerses(verses, options)}
         </div>
       </div>
       ${this.renderNavigationArrows()}
     `;
 
     this.attachArrowListeners();
-    this.setupScrollTracking();
+
+    if (options.startVerse) {
+      setTimeout(() => {
+        const verse = document.querySelector(`.verse[data-verse="${options.startVerse}"]`);
+        if (verse) {
+          verse.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    }
   }
 
-  formatVerses(verses) {
-    return verses.map(verse => `
-          <p class="verse">
+  formatVerses(verses, options = {}) {
+    return verses.map(verse => {
+      const isHighlighted = options.startVerse && (
+        (!options.endVerse && verse.verse_number == options.startVerse) ||
+        (options.endVerse && verse.verse_number >= options.startVerse && verse.verse_number <= options.endVerse)
+      );
+
+      return `
+          <p class="verse ${isHighlighted ? 'highlighted' : ''}" data-verse="${verse.verse_number}">
             <span class="verse-number">${verse.verse_number}</span>
             ${verse.text}
           </p>
-        `).join('');
+        `;
+    }).join('');
   }
 
 
@@ -63,7 +79,6 @@ export class ChapterViewer {
     `;
 
     this.attachArrowListeners();
-    this.setupScrollTracking();
   }
 
   renderNavigationArrows() {
@@ -113,34 +128,5 @@ export class ChapterViewer {
     } else if (this.currentBook < BIBLE_BOOKS.length - 1) {
       this.render(this.currentBook + 1, 1);
     }
-  }
-
-  setupScrollTracking() {
-    const leftArrows = document.querySelector('.chapter-nav-arrows.left');
-    const rightArrows = document.querySelector('.chapter-nav-arrows.right');
-
-    if (!leftArrows || !rightArrows) return;
-
-    const updateArrowPosition = () => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-
-      // Calculate the center position
-      const centerY = scrollY + (windowHeight / 2);
-      const maxY = documentHeight - (windowHeight / 2);
-      const minY = windowHeight / 2;
-
-      const clampedY = Math.max(minY, Math.min(centerY, maxY));
-
-      leftArrows.style.top = `${clampedY}px`;
-      rightArrows.style.top = `${clampedY}px`;
-    };
-
-    window.addEventListener('scroll', updateArrowPosition);
-    window.addEventListener('resize', updateArrowPosition);
-
-    // Initial position
-    updateArrowPosition();
   }
 }

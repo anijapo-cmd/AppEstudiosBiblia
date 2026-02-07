@@ -1,6 +1,7 @@
 import { BibleNavigation, generateStudiesMenu } from './bible-navigation.js';
 import { ChapterViewer } from './chapter-viewer.js';
 import { BookStudyEditor } from './book-study.js';
+import { ThematicStudies } from './thematic-studies.js';
 import { ThemeManager } from './theme-manager.js';
 import supabase from './supabase-client.js';
 
@@ -9,6 +10,7 @@ class BibleApp {
     this.bibleNav = new BibleNavigation();
     this.chapterViewer = new ChapterViewer('.main-content');
     this.bookStudyEditor = new BookStudyEditor('.main-content');
+    this.thematicStudies = new ThematicStudies('.main-content');
     this.themeManager = new ThemeManager();
     this.currentView = 'home';
   }
@@ -123,7 +125,7 @@ class BibleApp {
   setupEventListeners() {
     // Chapter navigation
     document.addEventListener('navigateToChapter', (e) => {
-      this.showChapter(e.detail.bookIndex, e.detail.chapter);
+      this.showChapter(e.detail.bookIndex, e.detail.chapter, e.detail);
     });
 
     // Book study navigation
@@ -227,9 +229,9 @@ class BibleApp {
     `;
   }
 
-  async showChapter(bookIndex, chapterNumber) {
+  async showChapter(bookIndex, chapterNumber, options = {}) {
     this.currentView = 'chapter';
-    await this.chapterViewer.render(bookIndex, chapterNumber);
+    await this.chapterViewer.render(bookIndex, chapterNumber, options);
   }
 
   async showBookStudy(bookIndex) {
@@ -239,17 +241,8 @@ class BibleApp {
 
   showThematicStudies() {
     this.currentView = 'thematicStudies';
-    const mainContent = document.querySelector('.main-content');
-    mainContent.innerHTML = `
-      <div class="fade-in" style="text-align: center; padding: 4rem 2rem;">
-        <h1 style="font-size: 2rem; color: var(--accent-primary); margin-bottom: 1rem;">
-          Estudios Temáticos
-        </h1>
-        <p style="color: var(--text-muted);">
-          Esta funcionalidad estará disponible próximamente.
-        </p>
-      </div>
-    `;
+    window.thematicStudies = this.thematicStudies; // For inline event handlers
+    this.thematicStudies.init();
   }
 }
 

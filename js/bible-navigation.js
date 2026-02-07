@@ -87,6 +87,9 @@ export class BibleNavigation {
         const dropdownMenu = document.createElement('div');
         dropdownMenu.className = 'dropdown-menu';
 
+        // Add Search Bar
+        dropdownMenu.appendChild(this.createSearchBar());
+
         // Add Old Testament Group
         dropdownMenu.appendChild(this.createTestamentGroup('Antiguo testamento', 'Antiguo'));
 
@@ -94,6 +97,83 @@ export class BibleNavigation {
         dropdownMenu.appendChild(this.createTestamentGroup('Nuevo testamento', 'Nuevo'));
 
         bibleNavItem.appendChild(dropdownMenu);
+    }
+
+    // Helper to create the search bar
+    createSearchBar() {
+        const searchContainer = document.createElement('div');
+        searchContainer.className = 'bible-search-container';
+
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = 'Buscar... e.g. Genesis 1:1';
+        searchInput.className = 'bible-search-input';
+
+        searchInput.addEventListener('click', (e) => e.stopPropagation());
+
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                this.handleSearch(searchInput.value);
+            }
+        });
+
+        searchContainer.appendChild(searchInput);
+        return searchContainer;
+    }
+
+    // Handle the search logic
+    handleSearch(query) {
+        if (!query.trim()) return;
+
+        const normalizedQuery = this.normalizeText(query.trim());
+
+        // Regex to match: [Book] [Chapter] [Verse/Range]
+        // Group 1: Book Name (allows numbers at start for 1 Samuel, etc)
+        // Group 2: Chapter
+        // Group 3: Optional start verse
+        // Group 4: Optional end verse
+        const regex = /^([1-3]?\s*[a-zñ]+(?:\s+[a-zñ]+)*)\s*(?:(\d+))?\s*(?:[:\s]\s*(\d+))?(?:\s*[-]\s*(\d+))?$/i;
+        const match = normalizedQuery.match(regex);
+
+        if (!match) {
+            alert('Formato de búsqueda no reconocido. Use: Libro [Capítulo] [Versículo]');
+            return;
+        }
+
+        const bookNameInput = match[1].trim();
+        const chapter = match[2] ? parseInt(match[2]) : 1;
+        const startVerse = match[3] ? parseInt(match[3]) : null;
+        const endVerse = match[4] ? parseInt(match[4]) : null;
+
+        // Find book index
+        const bookIndex = this.books.findIndex(b =>
+            this.normalizeText(b.name) === bookNameInput ||
+            this.normalizeText(b.name).replace(/\s/g, '') === bookNameInput.replace(/\s/g, '')
+        );
+
+        if (bookIndex === -1) {
+            alert('Libro no encontrado.');
+            return;
+        }
+
+        const book = this.books[bookIndex];
+
+        // Validate chapter
+        if (chapter > book.chapters || chapter < 1) {
+            alert(`El libro ${book.name} solo tiene ${book.chapters} capítulos.`);
+            return;
+        }
+
+        this.navigateToChapter(bookIndex, chapter, { startVerse, endVerse });
+    }
+
+    normalizeText(text) {
+        return text.toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9\s]/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
     }
 
     // Helper to create a testament group
@@ -175,7 +255,7 @@ export class BibleNavigation {
     }
 
     // Navigate to a specific chapter
-    navigateToChapter(bookIndex, chapterNumber) {
+    navigateToChapter(bookIndex, chapterNumber, options = {}) {
         this.currentBook = bookIndex;
         this.currentChapter = chapterNumber;
 
@@ -184,7 +264,8 @@ export class BibleNavigation {
             detail: {
                 book: this.books[bookIndex],
                 bookIndex: bookIndex,
-                chapter: chapterNumber
+                chapter: chapterNumber,
+                ...options
             }
         });
         document.dispatchEvent(event);

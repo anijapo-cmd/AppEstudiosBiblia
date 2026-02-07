@@ -525,7 +525,7 @@ export class BookStudyEditor {
     const paragraphs = this.studyData.highlighted_paragraphs || [];
 
     return `
-      <section class="study-section" id="parrafos-destacados">
+      <section class="study-section" id="párrafos-destacados">
         <h2 class="section-title">Párrafos destacados</h2>
         ${this.isEditMode ? `
           <div class="input-with-button">
